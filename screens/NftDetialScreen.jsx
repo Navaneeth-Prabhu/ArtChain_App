@@ -12,14 +12,20 @@ import {
 import React, { useState } from "react";
 
 import FocusedStatusBar from "../components/FocusedStatusBar";
-import { CircleButton, GradientText, RectButton } from "../components/Buttons";
+import {
+  CircleButton,
+  GradientText,
+  RectButton,
+  WishlistButton,
+} from "../components/Buttons";
 import { COLORS, SIZES, SHADOWS, FONTS, assets } from "../constants";
 import DetailsBid from "../components/DetailsBid";
 import { useNavigation } from "@react-navigation/native";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { LinearGradient } from "expo-linear-gradient";
+import PreparingPaymentScreen from "./PreparingPaymentScreen";
 
-const DetailScreen = ({ route }) => {
+const NftDetailScreen = ({ route }) => {
   const navigation = useNavigation();
 
   const { data } = route.params;
@@ -43,9 +49,16 @@ const DetailScreen = ({ route }) => {
         translucent={true}
       />
       <ScrollView className="">
-        <View className="w-full">
-          <View className="w-full h-[380] overflow-hidden">
-            <Image className="w-full h-full" source={data.image} />
+        <View className="w-full ">
+          <View
+            className="w-fit h-[500]  overflow-hidden object-contain"
+            style={{ ...SHADOWS.dark }}
+          >
+            <Image
+              style={{ ...SHADOWS.dark }}
+              className="w-full h-full rounded-b-[22px]"
+              source={data.image}
+            />
 
             <View
               className=" absolute w-full px-5"
@@ -56,18 +69,33 @@ const DetailScreen = ({ route }) => {
                   imgUrl={assets.left}
                   handlePress={() => navigation.goBack()}
                 />
-                <CircleButton imgUrl={assets.heart} />
+                <WishlistButton id={data.id} />
               </View>
             </View>
           </View>
 
-          <View className=" w-full h-full p-6 -mt-4 bg-white rounded-t-2xl">
-            <View>
-              {/* <FontAwesomeIcon icon="mug-saucer" color="blue" secondaryColor="red" secondaryOpacity={ 0.4 } /> */}
-              <Text className="text-2xl font-bold text-textPrimary">
-                {data.name}
-              </Text>
-              <Text className="text-gray-600 font-bold">{data.creator}</Text>
+          <View className=" w-full h-full p-6  bg-white rounded-t-2xl">
+            <View className="flex-row justify-between">
+              <View>
+                {/* <FontAwesomeIcon icon="mug-saucer" color="blue" secondaryColor="red" secondaryOpacity={ 0.4 } /> */}
+                <Text className="text-2xl font-bold text-textPrimary">
+                  {data.name}
+                </Text>
+                <Text className="text-gray-600 font-bold">@{data.creator}</Text>
+              </View>
+              <View className="flex-row items-center">
+                <Image
+                  source={assets.eth}
+                  resizeMode="contain"
+                  style={{ width: 30, height: 30 }}
+                />
+                <GradientText
+                  style={{ fontSize: 18, fontWeight: "bold" }}
+                  text={data.price}
+                />
+                <GradientText style={{ fontSize: 18, fontWeight: "bold" }} />
+                {/* <Text className='text-xl font-bold'>{data.price}</Text> */}
+              </View>
             </View>
             <View className="mt-6 flex-row items-center justify-center">
               <TouchableOpacity
@@ -102,15 +130,6 @@ const DetailScreen = ({ route }) => {
                     : "flex items-center  px-14 py-0 border-b-2 border-gray-400"
                 }
               >
-                {/* <Text
-                  className={
-                    History
-                      ? "font-bold text-lg text-cyan-600"
-                      : "font-bold text-lg text-gray-300"
-                  }
-                >
-                  Histroy
-                </Text> */}
                 {History ? (
                   <GradientText
                     text="History"
@@ -131,14 +150,16 @@ const DetailScreen = ({ route }) => {
               {History && (
                 <View className="">
                   {data.bids.map((item) => (
-                    <DetailsBid bid={item} />
+                    <DetailsBid key={item.id} bid={item} />
                   ))}
                 </View>
               )}
 
               {Detail && (
                 <View className="mt-4">
-                  <Text className='text-textPrimary text-sm font-normal mb-10'>{data.description}</Text>
+                  <Text className="text-textPrimary text-sm font-normal mb-10">
+                    {data.description}
+                  </Text>
                 </View>
               )}
             </View>
@@ -148,10 +169,10 @@ const DetailScreen = ({ route }) => {
       {/* button  */}
       <View className="w-full absolute bottom-0 justify-center items-center z-50 p-4 bg-white backdrop-blur-3xl">
         <View className="flex-row  items-center">
-          <View className="w-1/2 block items-center px-2 justify-center ">
+          <View className=" flex-row items-center px-2 space-x-4 justify-center w-full">
             <TouchableOpacity
-              onPress={() => navigation.navigate("Buy",{data})}
-              className=" w-full "
+             onPress={() => navigation.navigate("PreparingPayment", { data })}
+              className=" w-1/2"
             >
               <LinearGradient
                 colors={["#6849E8", "#8A6AEE", "#6EC2FA"]} //orginal
@@ -159,46 +180,33 @@ const DetailScreen = ({ route }) => {
                 end={{ x: 1, y: 1 }}
                 borderColor={["#6849E8", "#8A6AEE", "#6EC2FA"]}
                 style={{
-                  paddingHorizontal: 24,
-                  paddingVertical: 10,
+                  paddingHorizontal: 26,
+                  paddingVertical: 13,
                   borderRadius: 12,
                 }}
               >
-                <Text className="text-white text-center font-bold text-lg">
+                
+                <Text className="text-white text-center font-bold text-[16px]">
                   Buy
                 </Text>
               </LinearGradient>
             </TouchableOpacity>
-          </View>
-          <View className="w-1/2 block items-center px-2 justify-center">
-            {/* <TouchableOpacity
-              onPress={() => navigation.navigate("Bid")}
-              className="px-6 py-2 w-full bg-white border-textPrimary border-2 rounded-lg"
-            >
-              <Text className="text-center font-bold text-lg text-textPrimary">
-                Place a Bid
-              </Text>
-            </TouchableOpacity> */}
             <TouchableOpacity
-              onPress={() => navigation.navigate("Bid",{data})}
-              // className='bg-red-500'
-              // className="px-6 py-2 w-full bg-white border-textPrimary border-2 rounded-lg"
+              onPress={() => navigation.navigate("PreparingPayment", { data })}
+              className=" w-1/2"
             >
-              <LinearGradient
-                colors={["#6849E8", "#8A6AEE", "#6EC2FA"]} //orginal
-                start={{ x: 0, y: 0 }}
-                end={{ x: 1, y: 0 }}  
-                style={styles.linearGradient}
-              >
-                <View style={styles.innerContainer}>
-                  {/* <Text style={styles.buttonText}>Place a Bid</Text> */}
-                  <GradientText style={styles.buttonText} text="Place a Bid"/>
-                </View>
-              </LinearGradient>
+              <View className="px-6 py-[10]  justify-center items-center rounded-[12px] border-2 border-[#6849E8]">
+                <GradientText
+                  text="Place a Bid"
+                  style={{
+                    fontSize: 16,
+                    fontWeight: "bold",
+                    lineHeight: 24,
+                  }}
+                />
+              </View>
             </TouchableOpacity>
           </View>
-          {/* <RectButton minWidth={100} fontSize={SIZES.large} {...SHADOWS.dark} /> */}
-          {/* <RectButton minWidth={100} fontSize={SIZES.large} {...SHADOWS.dark} /> */}
         </View>
       </View>
     </SafeAreaView>
@@ -236,7 +244,7 @@ const styles = StyleSheet.create({
     borderRadius: 12, // <-- Outer Border Radius
   },
   innerContainer: {
-    borderRadius: 10, // <-- Inner Border Radius  
+    borderRadius: 10, // <-- Inner Border Radius
     // margin: 1, // <-- Border Width
     paddingHorizontal: 24,
     paddingVertical: 10,
@@ -251,4 +259,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default DetailScreen;
+export default NftDetailScreen;

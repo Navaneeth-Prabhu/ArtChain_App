@@ -7,32 +7,13 @@ import BidScreen from "../components/BidScreen";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
-import { Text, View } from "react-native";
+import { Image, Text, View } from "react-native";
+import { ProductStack } from "./StackNavigation";
+import { assets } from "../constants";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
-const x = () => {
-  return (
-    <Stack.Navigator>
-      <Stack.Screen
-        name="HomeMain"
-        component={HomeScreen}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="Detail"
-        component={DetailScreen}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="Bid"
-        component={BidScreen}
-        options={{ headerShown: false }}
-      />
-    </Stack.Navigator>
-  );
-};
 
 const BottomNavigation = () => {
   return (
@@ -44,10 +25,12 @@ const BottomNavigation = () => {
           backgroundColor: "white",
           position: "absolute",
           bottom: 0,
-          right: 0,
-          left: 0,
+          right: 20,
+          left: 20,
           elevation: 0,
-          borderRadius: 15,
+          // borderRadius: 15,
+          borderTopEndRadius:15,
+          borderTopStartRadius:15,
           height: 80,
         },
         tabBarInactiveTintColor: "#fff",
@@ -56,23 +39,30 @@ const BottomNavigation = () => {
     >
       <Tab.Screen
         name="Home"
-        component={HomeStack}
+        component={ProductStack}
         options={({ route }) => ({
+          tabBarShowLabel: false,
           tabBarStyle: {
             display: getTabBarVisibility(route),
             backgroundColor: "white",
             position: "absolute",
             bottom: 0,
-            right: 0,
-            left: 0,
+            right: 20,
+            left: 20,
             elevation: 0,
-            borderRadius: 15,
+            // borderRadius: 15,
+            borderTopEndRadius:15,
+            borderTopStartRadius:15,
             height: 80,
           },
           headerShown: false,
           tabBarIcon: ({ focused }) => (
-            <View className="flex-col items-center justify-center top-2">
-              <Text className={focused?"text-black font-bold":"text-green-500"}>Home</Text>
+            <View className="flex-col items-center justify-center">
+              <Image style={{tintColor:'black'}} className=' h-6 w-6' source={require('../assets/icons/home2.png')}/>
+              {
+               focused?<View className='h-2 w-2 bg-purple-800 opacity-50 absolute rounded-full bottom-4 right-2'></View>:null
+              }
+             <Text className={focused?"text-textPrimary font-bold":"text-gray-500 font-bold"}>Home</Text>
             </View>
           ),
         })}
@@ -83,8 +73,12 @@ const BottomNavigation = () => {
         options={{
           headerShown: false,
           tabBarIcon: ({ focused }) => (
-            <View className="flex-col items-center justify-center top-2">
-              <Text className={focused?"text-black font-bold ":"text-green-500"}>Search</Text>
+            <View className="flex-col items-center justify-center">
+               <Image style={{tintColor:'black'}} className=' h-6 w-6' source={require('../assets/icons/searchNew.png')}/>
+              {
+                focused?<View className='h-2 w-2 bg-purple-800 opacity-50 absolute rounded-full bottom-4 right-3'></View>:null
+              }
+             <Text className={focused?"text-textPrimary font-bold":"text-gray-500 font-bold"}>Search</Text>
             </View>
           ),
         }}
@@ -95,8 +89,12 @@ const BottomNavigation = () => {
         options={{
           headerShown: false,
           tabBarIcon: ({ focused }) => (
-            <View className="flex-col items-center justify-center top-2">
-              <Text className={focused?"text-black font-bold":"text-green-500"}>Profile</Text>
+            <View className="flex-col items-center justify-center ">
+               <Image style={{tintColor:'black'}} className=' h-6 w-6' source={require('../assets/icons/profileNew.png')}/>
+              {
+                 focused?<View className='h-2 w-2 bg-purple-800 opacity-50 absolute rounded-full bottom-4 right-3'></View>:null
+              }
+              <Text className={focused?"text-textPrimary font-bold":"text-gray-500 font-bold"}>Profile</Text>
             </View>
           ),
         }}
@@ -107,7 +105,7 @@ const BottomNavigation = () => {
 const getTabBarVisibility = (route) => {
  
   const routeName = getFocusedRouteNameFromRoute(route) ?? "Feed";
-  if (routeName == "Detail" || routeName == 'Bid') {
+  if (routeName == "Detail" || routeName == 'Bid' || routeName == 'Buy'||routeName == 'PreparingPayment' || routeName=='Success') {
     return "none";
   }else{
 

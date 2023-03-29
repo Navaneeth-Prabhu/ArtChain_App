@@ -10,23 +10,21 @@ const DetailsBid = ({ bid }) => {
       key={bid.id}
     >
       <View className="flex-row items-center space-x-3">
+      <View className='w-12 h-12 rounded-full bg-red-700 overflow-hidden'>
+            
         <Image
           source={bid.image}
-          resizeMode="contain"
-          style={{ width: 48, height: 48 }}
+          // resizeMode="contain"
+          className='h-full w-full cover'
         />
+            </View>
 
         <View>
-          <Text
-            style={{
-              // fontFamily: FONTS.semiBold,
-              fontSize: SIZES.small,
-              color: COLORS.primary,
-            }}
-          >
-            Bid placed by {bid.name}
+          <Text className='text-sm text-textPrimary '>
+      
+            Bid placed by <Text className='font-semibold'>{bid.name}</Text>
           </Text>
-          <Text
+          <Text className='text-sm'
             style={{
               // fontFamily: FONTS.regular,
               fontSize: SIZES.small - 2,
@@ -40,6 +38,7 @@ const DetailsBid = ({ bid }) => {
       </View>
       <View className="">
         <View className="flex-row justify-center">
+          
           <Image
             source={assets.eth}
             resizeMode="contain"
@@ -48,7 +47,7 @@ const DetailsBid = ({ bid }) => {
 
           <Text
             style={{
-              fontFamily: FONTS.medium,
+              // fontFamily: FONTS.medium,
               fontSize: SIZES.font,
               color: COLORS.primary,
             }}

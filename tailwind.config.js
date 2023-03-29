@@ -9,7 +9,8 @@ module.exports = {
     extend: {
       colors:{
         textPrimary:'#363E54',
-        lightBlack:'#1E1E1E'
+        lightBlack:'#1E1E1E',
+        borderPurple:'#6849E8',
       },
       backdropBlur: {
         xs: '2px',

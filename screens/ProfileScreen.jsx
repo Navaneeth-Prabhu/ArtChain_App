@@ -4,7 +4,8 @@ import FooterNav from "../components/FooterNav";
 import RemoteImage from "../components/RemoteImage";
 import MasonryList from "@react-native-seoul/masonry-list";
 import Pin from "../components/PinImage";
-import { assets } from "../constants";
+import { assets, SHADOWS } from "../constants";
+import { GradientText } from "../components/Buttons";
 
 const myNfts = [
   {
@@ -32,27 +33,30 @@ const myNfts = [
     img: "https://i.pinimg.com/564x/fc/a1/2c/fca12c81eedd743eeee0c0a7bb69a9c5.jpg",
   },
   {
-    id:7,
-    img:"https://assets.bwbx.io/images/users/iqjWHBFdfxIU/iV4SDQ2SyAjw/v2/1200x-1.jpg"
+    id: 7,
+    img: "https://assets.bwbx.io/images/users/iqjWHBFdfxIU/iV4SDQ2SyAjw/v2/1200x-1.jpg",
   },
 ];
-const FurnitureCard = ({
-  item,
-  
-}) => {
+const FurnitureCard = ({ item }) => {
   const randomBool = useMemo(() => Math.random() < 0.5, []);
   // const {theme} = useTheme();
 
   return (
-    <View key={item.id} className='p-2 overflow-hidden ' style={[{marginTop: 12, flex: 1}]}>
+    <SafeAreaView>
+
+    <View
+      key={item.id}
+      className="p-2 overflow-hidden "
+      style={[{ marginTop: 12, flex: 1 }]}
+    >
       <Image
-        source={{uri: item.img}}
+        source={{ uri: item.img }}
         style={{
           height: randomBool ? 150 : 280,
-          alignSelf: 'stretch',
+          alignSelf: "stretch",
         }}
         resizeMode="cover"
-        className='rounded-2xl'
+        className="rounded-2xl"
       />
       {/* <Text
         style={{
@@ -63,79 +67,110 @@ const FurnitureCard = ({
         asdf
       </Text> */}
     </View>
+    </SafeAreaView>
   );
 };
 
-const renderItem = ({item, i}) => {
+const renderItem = ({ item, i }) => {
   return (
-    <FurnitureCard item={item} style={{marginLeft: i % 2 === 0 ? 0 : 12}} />
+    <FurnitureCard item={item} style={{ marginLeft: i % 2 === 0 ? 0 : 12 }} />
   );
 };
 
 const ProfileScreen = () => {
   return (
     <SafeAreaView className="flex-1">
-      <ScrollView className="">
-        <View className="px-4 py-4">
-          <View className="flex-row justify-between items-center mt-2">
-            <Text className="text-textPrimary text-2xl font-bold dark:text-white mt-2">
+      <ScrollView className="bg-white">
+        <View className="px-4 py-4 absolute z-20">
+          <View className="flex-row w-[360px] justify-end items-center mt-2">
+            {/* <Text className="text-white text-2xl font-bold dark:text-white mt-2">
               __navaNeeth__
-            </Text>
+            </Text> */}
 
             <View className="flex-row space-x-2">
-              <View className="h-10 w-10 bg-purple-600 rounded-full"></View>
-              <View className="h-10 w-10 bg-purple-600 rounded-full"></View>
+              <View className="h-10 w-10 border-2 border-gray-300 bg-white/30 rounded-full items-center justify-center">
+                <Image
+                style={{tintColor:'white'}}
+                  className=" h-6 w-6"
+                  source={require("../assets/icons/add.png")}
+                />
+              </View>
+              <View className="h-10 w-10 border-2 border-gray-300 bg-white/30 rounded-full items-center justify-center">
+                <Image
+                 style={{tintColor:'white'}}
+                  className=" h-6 w-6"
+                  source={require("../assets/icons/setting.png")}
+                />
+              </View>
             </View>
           </View>
         </View>
-        <View className=" flex items-center p-4 border-b-2 border-gray-300">
-          <View className="flex-col  items-center space-y-2">
-            <View className="h-20 w-20 bg-purple-700 items-center justify-center rounded-full overflow-hidden p-1">
-              <Image source={assets.person01}/>
+
+        <View className="bg-white rounded-b-[40px]" style={{ ...SHADOWS.dark }}>
+          <View className="w-full bg-blue-700 items-center h-56 rounded-b-[40px] overflow-hidden">
+            <View className="bg-red-400 h-full w-full">
+              {/* <View className="h-20 w-20 bg-purple-700 items-center justify-center rounded-full overflow-hidden p-1">
+              <Image source={assets.profile}/>
+            </View> */}
+              {/* <Image className="w-full h-full bg-green-500 " source={{uri:"https://images.ctfassets.net/p4n9cqsquyq8/HVR292GRW1K0NqSieTGs0/ef20934e5bc510cb75039de7331dd629/Cool_Cats_NFTs__The_Best_NFT_Community_In_2022_.webp"}}/> */}
+              <Image
+                className="w-full h-full bg-green-500 "
+                source={{
+                  uri: "https://mir-s3-cdn-cf.behance.net/project_modules/fs/820e0194033957.5e7424bb876bb.jpg",
+                }}
+              />
             </View>
-            <Text className="font-bold text-lg text-textPrimary">@dizzy</Text>
-            <View className="flex-row space-x-8">
-              <View className="flex-col items-center">
-                <Text className="text-lg font-bold text-textPrimary">4</Text>
-                <Text className='text-gray-600 font-semibold'>Following</Text>
+          </View>
+          <View className="">
+            <View className="flex-col  items-center space-y-2  bg-white pb-8 rounded-b-[40px]">
+              <View className="p-1 rounded-full bg-white -mt-10 h-22 w-22 items-center justify-center">
+                <View className="h-20 w-20 bg-purple-700 items-center justify-center rounded-full overflow-hidden ">
+                  <Image className="w-20 h-20" source={assets.profile} />
+                </View>
               </View>
-              <View className="flex-col items-center">
-                <Text className="text-lg font-bold text-textPrimary">135</Text>
-                <Text className='text-gray-600 font-semibold'>Followers</Text>
+              <Text className="font-bold text-lg text-textPrimary">@dizzy</Text>
+              <View className="flex-row space-x-8">
+                <View className="flex-col items-center  w-16">
+                  <Text className="text-lg font-bold text-textPrimary">4</Text>
+                  <Text className="text-gray-600 font-semibold">Following</Text>
+                </View>
+                <View className="flex-col items-center  w-16">
+                  <Text className="text-lg font-bold text-textPrimary">
+                    135
+                  </Text>
+                  <Text className="text-gray-600 font-semibold">Followers</Text>
+                </View>
+                <View className="flex-col items-center  w-16">
+                  <Text className="text-lg font-bold text-textPrimary">
+                    347
+                  </Text>
+                  <Text className="text-gray-600 font-semibold">Likes</Text>
+                </View>
               </View>
-              <View className="flex-col items-center">
-                <Text className="text-lg font-bold text-textPrimary">347</Text>
-                <Text className='text-gray-600 font-semibold'>Likes</Text>
-              </View>
-             
             </View>
           </View>
         </View>
         <View className="mb-20">
-          <View className='w-full p-3 items-center'>
-            <Text className='font-bold text-lg text-center border-b-2 w-80'>My NFTs</Text>
+          <View className=" p-3 items-center mt-2">
+            <Text className="border-b-2 px-4 border-borderPurple">
+              <GradientText
+                text="My NFTs"
+                style={{ fontWeight: "bold", fontSize: 18 }}
+              />
+            </Text>
+            {/* <Text className='font-bold text-lg text-center px-6 border-b-2 text-textPrimary border-textPrimary'>My NFTs</Text> */}
           </View>
-          {/* <MasonryList
-            data={filteredItems}
-            keyExtractor={(item): string => item.id}
-            numColumns={2}
-            showsVerticalScrollIndicator={false}
-            renderItem={({ item }) => <CardItem />}
-            refreshing={isLoadingNext}
-            onRefresh={() => refetch({ first: ITEM_CNT })}
-            onEndReachedThreshold={0.1}
-            onEndReached={() => loadNext(ITEM_CNT)}
-          /> */}
+
           <MasonryList
-          style={{alignSelf:'stretch'}}
-          contentContainerStyle={{
-            paddingHorizontal:24,
-            alignSelf:'stretch'
-          }}
-          showsVerticalScrollIndicator={false}
-          numColumns={2}
-          data={myNfts}
-          renderItem={renderItem}
+            style={{ alignSelf: "stretch" }}
+            contentContainerStyle={{
+              paddingHorizontal: 24,
+              alignSelf: "stretch",
+            }}
+            showsVerticalScrollIndicator={false}
+            numColumns={2}
+            data={myNfts}
+            renderItem={renderItem}
           />
           {/* {myNfts?.map((item) => (
             <View key={item.id}>

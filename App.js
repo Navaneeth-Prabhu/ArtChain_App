@@ -7,7 +7,7 @@ import ProfileScreen from "./screens/ProfileScreen";
 import SearchScreen from "./screens/SearchScreen";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import BottomNavigation from "./navigation/BottomNavigation";
-import StackNavigation from "./navigation/StackNavigation";
+import StackNavigation, { MainStack } from "./navigation/StackNavigation";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -16,7 +16,7 @@ export default function App() {
   // const [loaded] = useFonts({})
   return (
     <NavigationContainer>
-      <BottomNavigation/>
+      <MainStack/>
       {/* <StackNavigation/> */}
     </NavigationContainer>
   );
